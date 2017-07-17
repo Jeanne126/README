@@ -26,14 +26,22 @@ $(function() {
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有链接字段而且链接不是空的。
          */
         it('and urls are not empty',function(){
-            expect(allFeeds.url).not.toBe(0);
+            for (var i = 0; i < allFeeds.length; i++) {
+               var feed= allFeeds[i];
+            }
+            expect(feed.url).toBeDefined();
+            expect(feed.url).not.toBe(0);
         });
 
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有名字字段而且不是空的。
          */
         it('and have names',function(){
-            expect(allFeeds.name).not.toBe(0);
+            for (var i = 0; i < allFeeds.length; i++) {
+               var feed= allFeeds[i];
+            }
+            expect(feed.name).toBeDefined();
+            expect(feed.name).not.toBe(0);
         });
     });    
     
@@ -47,8 +55,8 @@ $(function() {
          * 来搞清楚我们是怎么实现隐藏/展示菜单元素的。
          */
 
-        it('shows',function(){
-            expect($('menu-hidden')).not.toBe(null);
+        it('is hidden by default',function(){
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
 
@@ -58,8 +66,12 @@ $(function() {
           * 再次点击的时候是否隐藏。
           */
          it('and transfers',function(){
-            expect($('.slide-menu').length).not.toBe(0);
-            //expect($('.slide-menu')).toBe(null);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+            $('.menu-icon-link').trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
+
+            $('.menu-icon-link').trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
          });
     });
     /* TODO: 13. 写一个叫做 "Initial Entries" 的测试用例 */
