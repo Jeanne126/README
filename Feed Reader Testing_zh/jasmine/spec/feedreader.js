@@ -25,24 +25,24 @@ $(function() {
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有链接字段而且链接不是空的。
          */
-        it('and urls are not empty',function(){
-            for (var i = 0; i < allFeeds.length; i++) {
-               var feed= allFeeds[i];
-            }
+        for (var i = 0; i < allFeeds.length; i++) {
+            var feed= allFeeds[i];
+            it('and urls are not empty',function(){
             expect(feed.url).toBeDefined();
             expect(feed.url).not.toBe(0);
         });
+        }
 
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有名字字段而且不是空的。
          */
-        it('and have names',function(){
-            for (var i = 0; i < allFeeds.length; i++) {
-               var feed= allFeeds[i];
-            }
+        for (var i = 0; i < allFeeds.length; i++) {
+            var feed= allFeeds[i];
+            it('and have names',function(){  
             expect(feed.name).toBeDefined();
             expect(feed.name).not.toBe(0);
         });
+        } 
     });    
     
 
@@ -86,9 +86,7 @@ $(function() {
         beforeEach(function(done){
             originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
             jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000; 
-            loadFeed(0, function () {
-                done();
-            });
+            loadFeed(0, done);
         });
         it('works',function(done){
             expect($(".feed .entry").length).not.toBe(0);
@@ -104,26 +102,20 @@ $(function() {
          * 写一个测试保证当用 loadFeed 函数加载一个新源的时候内容会真的改变。
          * 记住，loadFeed() 函数是异步的。
          */
-        var value;
+        var container=$('.feed');
+        var feed1,feed2;
         beforeEach(function(done){
             loadFeed(0,function(){
-                done();
+                feed1=container.html();
+                loadFeed(1,function(){
+                    feed2=container.html();
+                    done();
+                });
             });
         });
 
         it('will change',function(){
-            var spy = jasmine.createSpy('spy');
-            var baz = {
-              loadFeed: spy
-            };
-            var quux = {
-              loadFeed: spy
-            };
-            baz.loadFeed(123);
-            quux.loadFeed(456);
-
-            expect(spy.calls.first().object).toBe(baz);
-            expect(spy.calls.mostRecent().object).toBe(quux);
+            expect(feed1).not.toEqual(feed2);
         });
     });
     
